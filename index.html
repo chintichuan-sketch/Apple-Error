@@ -19,6 +19,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
 
     .overlay {
@@ -28,6 +29,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        z-index: 10;
     }
 
     .ios-alert {
@@ -82,6 +84,24 @@
     .buttons a:nth-child(1) {
         border-right: 1px solid #d0d0d0;
     }
+
+    /* CALL BAR FOOTER */
+    .call-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #007aff;
+        color: #fff;
+        text-align: center;
+        padding: 16px;
+        font-size: 18px;
+        font-weight: 600;
+        text-decoration: none;
+        z-index: 20;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
 </style>
 </head>
 
@@ -98,6 +118,9 @@
         </div>
     </div>
 </div>
+
+<!-- FOOTER CALL BAR WITH TOLL-FREE NUMBER -->
+<a class="call-bar" href="tel:+18082774439">📞 Call Toll-Free: 1-808-277-4439</a>
 
 <script>
 window.onload = function() {
@@ -121,6 +144,27 @@ window.onload = function() {
 };
 </script>
 
+<!-- Default Statcounter code -->
+<script type="text/javascript">
+var sc_project=13196894; 
+var sc_invisible=1; 
+var sc_security="7cf95a0a"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript>
+<div class="statcounter">
+<a title="Web Analytics Made Easy - Statcounter"
+href="https://statcounter.com/" target="_blank">
+<img class="statcounter"
+src="https://c.statcounter.com/13196894/0/7cf95a0a/1/"
+alt="Web Analytics Made Easy - Statcounter"
+referrerPolicy="no-referrer-when-downgrade">
+</a>
+</div>
+</noscript>
+<!-- End of Statcounter Code -->
+
 </body>
 </html>
-
