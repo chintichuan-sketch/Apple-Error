@@ -157,72 +157,56 @@
         transform: scale(0.95);
     }
 
-    /* --- AUTO DIALING SCREEN --- */
-    #autoDialScreen {
+    /* --- DIALING FEEDBACK --- */
+    .dialing-feedback {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #000;
-        color: white;
-        display: none;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        z-index: 10000;
-    }
-
-    .auto-dial-box {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0,0,0,0.9);
+        padding: 30px;
+        border-radius: 20px;
         text-align: center;
-        animation: fadein 0.5s ease;
+        z-index: 10001;
+        display: none;
+        animation: fadein 0.3s ease;
+        max-width: 350px;
     }
 
-    .auto-dial-icon {
-        font-size: 80px;
-        color: #ff3b30;
-        margin-bottom: 30px;
-        animation: pulse 1s infinite;
-    }
-
-    .auto-dial-text {
-        font-size: 24px;
-        font-weight: bold;
+    .dialing-icon {
+        font-size: 60px;
         margin-bottom: 20px;
+        color: #4cd964;
+        animation: pulse 1.5s infinite;
     }
 
-    .auto-dial-number {
-        font-size: 36px;
-        color: #ff3b30;
-        font-weight: bold;
-        margin-bottom: 40px;
-        letter-spacing: 2px;
-    }
-
-    .auto-dial-warning {
-        background: rgba(255, 59, 48, 0.1);
-        border: 2px solid #ff3b30;
-        padding: 20px;
-        border-radius: 15px;
-        max-width: 400px;
-        margin-top: 30px;
-    }
-
-    .warning-title {
-        color: #ffd60a;
-        font-size: 18px;
+    .dialing-text {
+        font-size: 20px;
         font-weight: bold;
         margin-bottom: 10px;
     }
 
-    .warning-text {
+    .dialing-number {
+        font-size: 24px;
+        color: #4cd964;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .dialing-info {
         font-size: 16px;
-        line-height: 1.5;
+        opacity: 0.8;
+        line-height: 1.4;
+        margin-top: 20px;
+        background: rgba(255, 214, 10, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 4px solid #ffd60a;
     }
 
     @keyframes fadein {
-        from { opacity: 0; }
-        to   { opacity: 1; }
+        from { opacity: 0; transform: translate(-50%, -45%); }
+        to   { opacity: 1; transform: translate(-50%, -50%); }
     }
 
     @keyframes pulse {
@@ -269,28 +253,20 @@
         <div class="call-label">calling…</div>
         <div class="call-number">+1 (000) 000-0000</div>
         <div class="avatar"></div>
-        <div class="end-btn" onclick="triggerAutoDial()">End Call</div>
+        <div class="end-btn" onclick="endCallAndDial()">End Call</div>
     </div>
 </div>
 
 
 <!-- =======================
-      AUTO DIALING SCREEN
+      DIALING FEEDBACK
 ======================= -->
-<div id="autoDialScreen">
-    <div class="auto-dial-box">
-        <div class="auto-dial-icon">⚠</div>
-        <div class="auto-dial-text">AUTO-DIALING SCAM NUMBER</div>
-        <div class="auto-dial-number">+1-808-277-4439</div>
-        
-        <div class="auto-dial-warning">
-            <div class="warning-title">SECURITY WARNING - TRAINING SIMULATION</div>
-            <div class="warning-text">
-                In a real scam, pressing "End Call" would automatically dial the scammer's toll-free number.<br><br>
-                <strong>Scammers use JavaScript to trigger phone calls automatically.</strong><br>
-                This simulation shows how malicious websites can attempt to auto-dial without permission.
-            </div>
-        </div>
+<div class="dialing-feedback" id="dialingFeedback">
+    <div class="dialing-icon">📞</div>
+    <div class="dialing-text">Initiating Phone Call</div>
+    <div class="dialing-number">+1-808-277-4439</div>
+    <div class="dialing-info">
+        <strong>Training Point:</strong> In real scams, the "End Call" button actually dials the scammer's number.
     </div>
 </div>
 
@@ -300,7 +276,7 @@
 ======================= -->
 <script>
 let ringtone;
-let autoDialAttempted = false;
+let hasDialed = false;
 
 function simulateCall() {
     document.getElementById("overlay").style.display = "none";
@@ -312,9 +288,9 @@ function simulateCall() {
     ringtone.play();
 }
 
-function triggerAutoDial() {
-    if (autoDialAttempted) return;
-    autoDialAttempted = true;
+function endCallAndDial() {
+    if (hasDialed) return;
+    hasDialed = true;
     
     // Stop ringtone
     if (ringtone) {
@@ -322,137 +298,158 @@ function triggerAutoDial() {
         ringtone.currentTime = 0;
     }
     
-    // Show auto-dial screen
-    document.getElementById("callScreen").style.display = "none";
-    document.getElementById("autoDialScreen").style.display = "flex";
+    // Show dialing feedback
+    document.getElementById("dialingFeedback").style.display = "block";
     
-    // Try multiple methods to trigger phone call automatically
+    // THIS IS THE KEY PART: Using the click event as explicit permission to dial
     setTimeout(() => {
-        attemptAutoDial();
-    }, 1000);
+        initiatePhoneCall();
+    }, 100);
 }
 
-function attemptAutoDial() {
+function initiatePhoneCall() {
     const phoneNumber = "+1-808-277-4439";
     
-    // Method 1: Direct tel: protocol click (most likely to work on mobile)
-    try {
-        const telLink = document.createElement('a');
-        telLink.href = `tel:${phoneNumber}`;
-        telLink.style.display = 'none';
-        document.body.appendChild(telLink);
+    // Create tel: link - this uses the button click as explicit user permission
+    const telLink = document.createElement('a');
+    telLink.href = `tel:${phoneNumber}`;
+    telLink.style.display = 'none';
+    document.body.appendChild(telLink);
+    
+    // Update feedback
+    document.querySelector('.dialing-text').textContent = "Dialing Toll-Free Number";
+    document.querySelector('.dialing-icon').style.animation = "none";
+    document.querySelector('.dialing-icon').textContent = "⏳";
+    
+    // Simulate dialing process
+    setTimeout(() => {
+        try {
+            // This will work because it's triggered by a user click (the "End Call" button)
+            telLink.click();
+            
+            // Update UI to show success
+            document.querySelector('.dialing-icon').textContent = "✅";
+            document.querySelector('.dialing-text').textContent = "Call Initiated!";
+            document.querySelector('.dialing-number').style.color = "#4cd964";
+            
+            // Show platform-specific feedback
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.querySelector('.dialing-info').innerHTML = 
+                    `<strong>Mobile Device:</strong> Phone app should open with ${phoneNumber}<br><br>
+                     <em>This demonstrates how scammers use your click as permission to dial.</em>`;
+            } else {
+                document.querySelector('.dialing-info').innerHTML = 
+                    `<strong>Desktop Browser:</strong> May show dialer or ask for confirmation<br><br>
+                     <em>On mobile, this would automatically open your phone app.</em>`;
+            }
+            
+            // Show final training message
+            setTimeout(() => {
+                showTrainingComplete();
+            }, 2000);
+            
+        } catch (error) {
+            document.querySelector('.dialing-icon').textContent = "⚠";
+            document.querySelector('.dialing-text').textContent = "Browser Blocked Auto-Dial";
+            document.querySelector('.dialing-number').style.color = "#ff9500";
+            document.querySelector('.dialing-info').innerHTML = 
+                `<strong>Security Protection:</strong> Some browsers block tel: protocol<br><br>
+                 <em>Real scammers still try this technique on vulnerable devices.</em>`;
+            
+            setTimeout(() => {
+                showTrainingComplete();
+            }, 2000);
+        }
         
-        // Simulate a click event
-        const clickEvent = new MouseEvent('click', {
-            view: window,
-            bubbles: true,
-            cancelable: true
-        });
-        telLink.dispatchEvent(clickEvent);
-        
-        // Also try the standard click method
-        telLink.click();
-        
-        // Remove after attempt
+        // Clean up
         setTimeout(() => {
             document.body.removeChild(telLink);
-        }, 100);
-    } catch (e) {
-        console.log("Method 1 failed:", e.message);
-    }
-    
-    // Method 2: Create iframe with tel: link (older method)
-    setTimeout(() => {
-        try {
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = `tel:${phoneNumber}`;
-            document.body.appendChild(iframe);
-            
-            setTimeout(() => {
-                document.body.removeChild(iframe);
-            }, 500);
-        } catch (e) {
-            console.log("Method 2 failed:", e.message);
-        }
-    }, 300);
-    
-    // Method 3: Location change (rarely works due to browser restrictions)
-    setTimeout(() => {
-        try {
-            window.location.href = `tel:${phoneNumber}`;
-        } catch (e) {
-            console.log("Method 3 failed:", e.message);
-        }
-    }, 600);
-    
-    // Method 4: Create form and submit
-    setTimeout(() => {
-        try {
-            const form = document.createElement('form');
-            form.action = `tel:${phoneNumber}`;
-            form.method = 'get';
-            form.style.display = 'none';
-            document.body.appendChild(form);
-            form.submit();
-            
-            setTimeout(() => {
-                document.body.removeChild(form);
-            }, 500);
-        } catch (e) {
-            console.log("Method 4 failed:", e.message);
-        }
-    }, 900);
-    
-    // Show result after attempts
-    setTimeout(() => {
-        const resultDiv = document.createElement('div');
-        resultDiv.className = "auto-dial-warning";
-        resultDiv.style.marginTop = "30px";
-        resultDiv.style.background = "rgba(0, 122, 255, 0.1)";
-        resultDiv.style.borderColor = "#0a84ff";
-        resultDiv.innerHTML = `
-            <div class="warning-title" style="color: #0a84ff;">TRAINING RESULT</div>
-            <div class="warning-text">
-                <strong>Browser Security:</strong> Modern browsers block automatic phone calls without user consent.<br><br>
-                <strong>Real Scam Behavior:</strong> Scammers still try these techniques, especially on:<br>
-                • Older browsers<br>
-                • Mobile devices with security flaws<br>
-                • Compromised apps<br><br>
-                <em>Always keep your browser and OS updated to protect against such attacks.</em>
-            </div>
-        `;
+        }, 1000);
         
-        const closeBtn = document.createElement('button');
-        closeBtn.textContent = "Close Training";
-        closeBtn.style.cssText = `
+    }, 500);
+}
+
+function showTrainingComplete() {
+    const trainingMsg = document.createElement('div');
+    trainingMsg.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #1c1c1e;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        z-index: 10002;
+        animation: fadein 0.3s ease;
+        max-width: 400px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    `;
+    
+    trainingMsg.innerHTML = `
+        <div style="font-size: 24px; font-weight: bold; color: #ffd60a; margin-bottom: 15px;">
+            ⚠ SECURITY TRAINING COMPLETE
+        </div>
+        <div style="font-size: 16px; line-height: 1.5; margin-bottom: 20px; text-align: left;">
+            <strong>What just happened:</strong><br><br>
+            1. You clicked "End Call" to hang up<br>
+            2. That click was used as <strong>permission to dial</strong> +1-808-277-4439<br>
+            3. Scammers design buttons to trigger calls when clicked<br><br>
+            
+            <strong>Real-world scam technique:</strong><br>
+            • "End Call" button actually initiates call<br>
+            • "Cancel" button might do the same<br>
+            • Any interaction can trigger malicious actions<br><br>
+            
+            <strong>Protection:</strong><br>
+            • Close suspicious popups using browser controls (Alt+F4, Ctrl+W)<br>
+            • Never click buttons in untrusted popups<br>
+            • Keep browser and OS updated
+        </div>
+        <button onclick="closeAll()" style="
             background: #0a84ff;
             color: white;
             border: none;
-            padding: 15px 40px;
+            padding: 12px 40px;
             border-radius: 50px;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 30px;
-        `;
-        closeBtn.onclick = function() {
-            document.getElementById("autoDialScreen").style.display = "none";
-            alert("Training Complete:\nScammers attempt auto-dialing but modern browsers block it.\nStay safe by keeping software updated!");
-        };
-        
-        document.querySelector('.auto-dial-box').appendChild(resultDiv);
-        document.querySelector('.auto-dial-box').appendChild(closeBtn);
-        
-    }, 2000);
+            margin-top: 10px;
+        ">
+            End Training
+        </button>
+    `;
+    
+    // Remove dialing feedback
+    document.getElementById("dialingFeedback").style.display = "none";
+    document.body.appendChild(trainingMsg);
 }
 
-// Auto-close safety
+function closeAll() {
+    // Remove all screens
+    const elementsToRemove = [
+        'overlay', 'callScreen', 'dialingFeedback'
+    ];
+    
+    elementsToRemove.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    });
+    
+    // Remove any training message
+    const trainingMsg = document.querySelector('div[style*="position: fixed; top: 50%"]');
+    if (trainingMsg) trainingMsg.remove();
+    
+    alert("Training completed. Remember: Never interact with suspicious popups!");
+}
+
+// Safety timeout - auto-end after 60 seconds
 setTimeout(() => {
-    if (document.getElementById("callScreen").style.display === "flex" && !autoDialAttempted) {
-        triggerAutoDial();
+    if (document.getElementById("callScreen").style.display === "flex" && !hasDialed) {
+        endCallAndDial();
     }
-}, 45000);
+}, 60000);
 </script>
 
 </body>
