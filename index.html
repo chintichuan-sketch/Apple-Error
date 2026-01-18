@@ -112,7 +112,6 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         z-index: 9999;
     }
 
@@ -148,71 +147,65 @@
         margin: 0 auto;
         border-radius: 50px;
         font-size: 20px;
-        font-weight: 600;
         cursor: pointer;
         transition: 0.2s;
+        font-weight: bold;
     }
 
     .end-btn:active {
         transform: scale(0.95);
     }
 
-    /* --- DIALING FEEDBACK --- */
-    .dialing-feedback {
+    /* --- AUTO-DIAL SIMULATION --- */
+    #autoDialSimulation {
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0,0,0,0.9);
-        padding: 30px;
-        border-radius: 20px;
-        text-align: center;
-        z-index: 10001;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        color: white;
         display: none;
-        animation: fadein 0.3s ease;
-        max-width: 350px;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 10000;
     }
 
-    .dialing-icon {
-        font-size: 60px;
-        margin-bottom: 20px;
-        color: #4cd964;
-        animation: pulse 1.5s infinite;
+    .simulation-box {
+        text-align: center;
+        animation: fadein 0.5s ease;
+        max-width: 400px;
+        padding: 20px;
     }
 
-    .dialing-text {
-        font-size: 20px;
+    .simulation-icon {
+        font-size: 80px;
+        margin-bottom: 30px;
+        color: #ff3b30;
+    }
+
+    .simulation-title {
+        font-size: 28px;
         font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .dialing-number {
-        font-size: 24px;
-        color: #4cd964;
-        font-weight: bold;
         margin-bottom: 20px;
+        color: #ff3b30;
     }
 
-    .dialing-info {
-        font-size: 16px;
-        opacity: 0.8;
-        line-height: 1.4;
-        margin-top: 20px;
-        background: rgba(255, 214, 10, 0.1);
-        padding: 15px;
-        border-radius: 10px;
-        border-left: 4px solid #ffd60a;
+    .simulation-number {
+        font-size: 32px;
+        font-weight: bold;
+        background: #ff3b30;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        margin: 30px 0;
+        letter-spacing: 2px;
     }
 
     @keyframes fadein {
-        from { opacity: 0; transform: translate(-50%, -45%); }
-        to   { opacity: 1; transform: translate(-50%, -50%); }
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
+        from { opacity: 0; }
+        to   { opacity: 1; }
     }
 </style>
 </head>
@@ -233,7 +226,7 @@
 
         <div class="alert">⚠ Simulation Alert</div>
 
-        <div class="support-number">+1 (000) 000-0000</div>
+        <div class="support-number">+1-800-000-0000</div>
 
         <div class="training-banner">THIS IS A SAFE TRAINING SIMULATION</div>
 
@@ -251,32 +244,31 @@
 <div id="callScreen">
     <div class="call-box">
         <div class="call-label">calling…</div>
-        <div class="call-number">+1 (000) 000-0000</div>
+        <div class="call-number">+1-800-000-0000</div>
         <div class="avatar"></div>
-        <div class="end-btn" onclick="endCallAndDial()">End Call</div>
+        <div class="end-btn" onclick="simulateAutoDial()">End Call</div>
     </div>
 </div>
 
 
 <!-- =======================
-      DIALING FEEDBACK
+      AUTO-DIAL SIMULATION
 ======================= -->
-<div class="dialing-feedback" id="dialingFeedback">
-    <div class="dialing-icon">📞</div>
-    <div class="dialing-text">Initiating Phone Call</div>
-    <div class="dialing-number">+1-808-277-4439</div>
-    <div class="dialing-info">
-        <strong>Training Point:</strong> In real scams, the "End Call" button actually dials the scammer's number.
+<div id="autoDialSimulation">
+    <div class="simulation-box">
+        <div class="simulation-icon">🚨</div>
+        <div class="simulation-title">AUTO-DIALING</div>
+        <div class="simulation-number">+1-800-000-0000</div>
+
+        <p style="opacity:0.8">
+            Your click was treated as consent — this is exactly how scam popups behave.
+        </p>
     </div>
 </div>
 
 
-<!-- =======================
-      JAVASCRIPT LOGIC
-======================= -->
 <script>
 let ringtone;
-let hasDialed = false;
 
 function simulateCall() {
     document.getElementById("overlay").style.display = "none";
@@ -288,168 +280,22 @@ function simulateCall() {
     ringtone.play();
 }
 
-function endCallAndDial() {
-    if (hasDialed) return;
-    hasDialed = true;
-    
-    // Stop ringtone
-    if (ringtone) {
-        ringtone.pause();
-        ringtone.currentTime = 0;
-    }
-    
-    // Show dialing feedback
-    document.getElementById("dialingFeedback").style.display = "block";
-    
-    // THIS IS THE KEY PART: Using the click event as explicit permission to dial
-    setTimeout(() => {
-        initiatePhoneCall();
-    }, 100);
-}
+function simulateAutoDial() {
+    if (ringtone) ringtone.pause();
 
-function initiatePhoneCall() {
-    const phoneNumber = "+1-808-277-4439";
-    
-    // Create tel: link - this uses the button click as explicit user permission
-    const telLink = document.createElement('a');
-    telLink.href = `tel:${phoneNumber}`;
-    telLink.style.display = 'none';
-    document.body.appendChild(telLink);
-    
-    // Update feedback
-    document.querySelector('.dialing-text').textContent = "Dialing Toll-Free Number";
-    document.querySelector('.dialing-icon').style.animation = "none";
-    document.querySelector('.dialing-icon').textContent = "⏳";
-    
-    // Simulate dialing process
-    setTimeout(() => {
-        try {
-            // This will work because it's triggered by a user click (the "End Call" button)
-            telLink.click();
-            
-            // Update UI to show success
-            document.querySelector('.dialing-icon').textContent = "✅";
-            document.querySelector('.dialing-text').textContent = "Call Initiated!";
-            document.querySelector('.dialing-number').style.color = "#4cd964";
-            
-            // Show platform-specific feedback
-            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                document.querySelector('.dialing-info').innerHTML = 
-                    `<strong>Mobile Device:</strong> Phone app should open with ${phoneNumber}<br><br>
-                     <em>This demonstrates how scammers use your click as permission to dial.</em>`;
-            } else {
-                document.querySelector('.dialing-info').innerHTML = 
-                    `<strong>Desktop Browser:</strong> May show dialer or ask for confirmation<br><br>
-                     <em>On mobile, this would automatically open your phone app.</em>`;
-            }
-            
-            // Show final training message
-            setTimeout(() => {
-                showTrainingComplete();
-            }, 2000);
-            
-        } catch (error) {
-            document.querySelector('.dialing-icon').textContent = "⚠";
-            document.querySelector('.dialing-text').textContent = "Browser Blocked Auto-Dial";
-            document.querySelector('.dialing-number').style.color = "#ff9500";
-            document.querySelector('.dialing-info').innerHTML = 
-                `<strong>Security Protection:</strong> Some browsers block tel: protocol<br><br>
-                 <em>Real scammers still try this technique on vulnerable devices.</em>`;
-            
-            setTimeout(() => {
-                showTrainingComplete();
-            }, 2000);
-        }
-        
-        // Clean up
-        setTimeout(() => {
-            document.body.removeChild(telLink);
-        }, 1000);
-        
-    }, 500);
-}
+    document.getElementById("callScreen").style.display = "none";
+    document.getElementById("autoDialSimulation").style.display = "flex";
 
-function showTrainingComplete() {
-    const trainingMsg = document.createElement('div');
-    trainingMsg.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #1c1c1e;
-        padding: 30px;
-        border-radius: 20px;
-        text-align: center;
-        z-index: 10002;
-        animation: fadein 0.3s ease;
-        max-width: 400px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    `;
-    
-    trainingMsg.innerHTML = `
-        <div style="font-size: 24px; font-weight: bold; color: #ffd60a; margin-bottom: 15px;">
-            ⚠ SECURITY TRAINING COMPLETE
-        </div>
-        <div style="font-size: 16px; line-height: 1.5; margin-bottom: 20px; text-align: left;">
-            <strong>What just happened:</strong><br><br>
-            1. You clicked "End Call" to hang up<br>
-            2. That click was used as <strong>permission to dial</strong> +1-808-277-4439<br>
-            3. Scammers design buttons to trigger calls when clicked<br><br>
-            
-            <strong>Real-world scam technique:</strong><br>
-            • "End Call" button actually initiates call<br>
-            • "Cancel" button might do the same<br>
-            • Any interaction can trigger malicious actions<br><br>
-            
-            <strong>Protection:</strong><br>
-            • Close suspicious popups using browser controls (Alt+F4, Ctrl+W)<br>
-            • Never click buttons in untrusted popups<br>
-            • Keep browser and OS updated
-        </div>
-        <button onclick="closeAll()" style="
-            background: #0a84ff;
-            color: white;
-            border: none;
-            padding: 12px 40px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-        ">
-            End Training
-        </button>
-    `;
-    
-    // Remove dialing feedback
-    document.getElementById("dialingFeedback").style.display = "none";
-    document.body.appendChild(trainingMsg);
-}
+    // Fake scammer auto-dial attempts (safe, no real call)
+    const phone = "+1-800-000-0000";
 
-function closeAll() {
-    // Remove all screens
-    const elementsToRemove = [
-        'overlay', 'callScreen', 'dialingFeedback'
-    ];
-    
-    elementsToRemove.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-    });
-    
-    // Remove any training message
-    const trainingMsg = document.querySelector('div[style*="position: fixed; top: 50%"]');
-    if (trainingMsg) trainingMsg.remove();
-    
-    alert("Training completed. Remember: Never interact with suspicious popups!");
+    const link = document.createElement("a");
+    link.href = "tel:" + phone;
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => document.body.removeChild(link), 500);
 }
-
-// Safety timeout - auto-end after 60 seconds
-setTimeout(() => {
-    if (document.getElementById("callScreen").style.display === "flex" && !hasDialed) {
-        endCallAndDial();
-    }
-}, 60000);
 </script>
 
 </body>
