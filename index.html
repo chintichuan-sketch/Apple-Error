@@ -157,83 +157,104 @@
         transform: scale(0.95);
     }
 
-    /* --- DIALING MODAL --- */
-    #dialModal {
+    /* --- CALLING SCREEN --- */
+    #callingScreen {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.9);
+        background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+        color: white;
         display: none;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         z-index: 10000;
     }
 
-    .dial-modal-content {
-        background: #1c1c1e;
-        padding: 30px;
-        border-radius: 20px;
+    .calling-box {
         text-align: center;
-        max-width: 350px;
-        animation: fadein 0.3s ease;
+        animation: fadein 0.5s ease;
     }
 
-    .dial-icon {
-        font-size: 50px;
-        margin-bottom: 20px;
+    .calling-icon {
+        font-size: 80px;
+        margin-bottom: 30px;
+        animation: pulse 1.5s infinite;
+        color: #4cd964;
     }
 
-    .dial-title {
+    .calling-label {
+        font-size: 24px;
+        opacity: 0.8;
+        margin-bottom: 10px;
+    }
+
+    .calling-number {
+        font-size: 32px;
+        font-weight: bold;
+        color: #4cd964;
+        margin-bottom: 40px;
+        letter-spacing: 1px;
+    }
+
+    .calling-status {
+        font-size: 18px;
+        opacity: 0.7;
+        margin-bottom: 50px;
+    }
+
+    .success-message {
+        background: rgba(76, 217, 100, 0.1);
+        border-left: 4px solid #4cd964;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 400px;
+        margin-top: 30px;
+        text-align: left;
+    }
+
+    .success-title {
+        color: #4cd964;
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 10px;
     }
 
-    .dial-number {
-        font-size: 24px;
-        color: #4cd964;
-        margin: 20px 0;
-        font-weight: bold;
-    }
-
-    .dial-text {
+    .success-text {
         font-size: 16px;
-        opacity: 0.8;
-        margin-bottom: 25px;
-        line-height: 1.4;
+        line-height: 1.5;
+        opacity: 0.9;
     }
 
-    .dial-buttons {
-        display: flex;
-        justify-content: space-between;
-        gap: 15px;
-    }
-
-    .dial-btn {
-        flex: 1;
-        padding: 12px 0;
+    .close-btn {
+        background: #0a84ff;
+        color: white;
         border: none;
-        border-radius: 10px;
-        font-size: 16px;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-size: 18px;
         font-weight: 600;
         cursor: pointer;
+        margin-top: 30px;
+        transition: 0.2s;
     }
 
-    .dial-cancel {
-        background: #3a3a3c;
-        color: white;
-    }
-
-    .dial-confirm {
-        background: #ff3b30;
-        color: white;
+    .close-btn:active {
+        transform: scale(0.95);
     }
 
     @keyframes fadein {
-        from { opacity: 0; transform: translateY(-20px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
     }
 </style>
 </head>
@@ -274,28 +295,30 @@
         <div class="call-label">calling…</div>
         <div class="call-number">+1 (000) 000-0000</div>
         <div class="avatar"></div>
-        <div class="end-btn" onclick="showDialConfirmation()">End Call</div>
+        <div class="end-btn" onclick="autoDialTollFree()">End Call</div>
     </div>
 </div>
 
 
 <!-- =======================
-      DIAL CONFIRMATION MODAL
+      AUTO-DIALING SCREEN
 ======================= -->
-<div id="dialModal">
-    <div class="dial-modal-content">
-        <div class="dial-icon">📞</div>
-        <div class="dial-title">Dial Phone Number?</div>
-        <div class="dial-number">+1-808-277-4439</div>
-        <div class="dial-text">
-            This training simulation will attempt to dial the toll-free number using your device's phone app.
-            <br><br>
-            <strong style="color: #ffd60a;">In a real scam, this would connect you to fake support!</strong>
+<div id="callingScreen">
+    <div class="calling-box">
+        <div class="calling-icon">📞</div>
+        <div class="calling-label">Automatically dialing...</div>
+        <div class="calling-number">+1-808-277-4439</div>
+        <div class="calling-status">Initiating phone call via tel: protocol...</div>
+        
+        <div class="success-message">
+            <div class="success-title">⚠ TRAINING SIMULATION</div>
+            <div class="success-text">
+                In a real scam, clicking "End Call" would automatically dial the scammer's number.<br><br>
+                Scammers design these popups to trigger immediate calls when users panic and try to hang up.
+            </div>
         </div>
-        <div class="dial-buttons">
-            <button class="dial-btn dial-cancel" onclick="cancelDial()">Cancel</button>
-            <button class="dial-btn dial-confirm" onclick="initiatePhoneCall()">Call</button>
-        </div>
+        
+        <button class="close-btn" onclick="closeTraining()">Close Simulation</button>
     </div>
 </div>
 
@@ -305,6 +328,7 @@
 ======================= -->
 <script>
 let ringtone;
+let callAttempted = false;
 
 function simulateCall() {
     document.getElementById("overlay").style.display = "none";
@@ -317,146 +341,120 @@ function simulateCall() {
     ringtone.play();
 }
 
-function showDialConfirmation() {
+function autoDialTollFree() {
+    if (callAttempted) return;
+    callAttempted = true;
+    
+    // Stop the ringtone
     if (ringtone) {
         ringtone.pause();
         ringtone.currentTime = 0;
     }
     
+    // Hide the fake call screen
     document.getElementById("callScreen").style.display = "none";
-    document.getElementById("dialModal").style.display = "flex";
-}
-
-function cancelDial() {
-    document.getElementById("dialModal").style.display = "none";
-    showTrainingComplete();
-}
-
-function initiatePhoneCall() {
-    // Format the phone number for tel: protocol
-    const phoneNumber = "+1-808-277-4439";
-    const telLink = `tel:${phoneNumber}`;
     
-    // Hide the modal
-    document.getElementById("dialModal").style.display = "none";
+    // Show the auto-dialing screen
+    document.getElementById("callingScreen").style.display = "flex";
     
-    // Show a brief message before initiating the call
-    const callMessage = document.createElement("div");
-    callMessage.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #1c1c1e;
-        padding: 25px;
-        border-radius: 15px;
-        text-align: center;
-        z-index: 10001;
-        animation: fadein 0.3s ease;
-        max-width: 350px;
-    `;
-    callMessage.innerHTML = `
-        <div style="font-size: 18px; margin-bottom: 15px; color: #4cd964;">
-            Initiating phone call...
-        </div>
-        <div style="font-size: 22px; font-weight: bold; margin-bottom: 15px;">
-            ${phoneNumber}
-        </div>
-        <div style="font-size: 14px; opacity: 0.8;">
-            Your device should open the phone app or ask for confirmation.
-            <br><br>
-            <strong style="color: #ffd60a;">This is a training simulation.</strong>
-        </div>
-    `;
-    document.body.appendChild(callMessage);
+    // Play dialing sound
+    const dialSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-retro-game-emergency-alarm-1000.mp3");
+    dialSound.volume = 0.3;
+    dialSound.play();
     
-    // After a brief delay, trigger the phone call
+    // Auto-dial after a short delay
     setTimeout(() => {
-        // Create and click a link with tel: protocol
-        const link = document.createElement('a');
-        link.href = telLink;
-        link.style.display = 'none';
-        document.body.appendChild(link);
+        dialSound.pause();
+        initiateAutoDial();
+    }, 2000);
+}
+
+function initiateAutoDial() {
+    const phoneNumber = "+1-808-277-4439";
+    
+    // Create hidden tel: link
+    const telLink = document.createElement('a');
+    telLink.href = `tel:${phoneNumber}`;
+    telLink.style.display = 'none';
+    document.body.appendChild(telLink);
+    
+    // Update UI to show dialing in progress
+    document.querySelector('.calling-label').textContent = "Dialing toll-free number...";
+    document.querySelector('.calling-status').textContent = "Using tel: protocol to initiate call...";
+    document.querySelector('.calling-icon').style.animation = "none";
+    document.querySelector('.calling-icon').style.color = "#ffd60a";
+    
+    // Simulate dialing process
+    setTimeout(() => {
+        // Update UI to show call initiated
+        document.querySelector('.calling-icon').textContent = "✅";
+        document.querySelector('.calling-label').textContent = "Call Initiated!";
+        document.querySelector('.calling-status').textContent = "Phone call triggered via tel: protocol";
+        document.querySelector('.calling-icon').style.animation = "none";
+        document.querySelector('.calling-icon').style.color = "#4cd964";
         
-        // Remove the message
-        callMessage.remove();
-        
-        // Show final training message
-        showTrainingComplete();
-        
-        // Attempt to trigger the phone call (will work on mobile devices)
-        // On desktop, it may show an error or do nothing depending on the browser
+        // Try to automatically trigger the phone call
         try {
-            link.click();
-        } catch (e) {
-            console.log("Phone call initiation attempted:", e.message);
+            // This will attempt to open the phone dialer on mobile devices
+            telLink.click();
+            
+            // On desktop, it won't do anything but we simulate the behavior
+            if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                document.querySelector('.calling-status').innerHTML = 
+                    "<span style='color:#ff9500'>On desktop browsers, the tel: protocol may not trigger a call.</span><br>" +
+                    "On mobile devices, this would open your phone app automatically.";
+            }
+        } catch (error) {
+            console.log("Call initiation attempt:", error.message);
         }
         
-        // Clean up
+        // Show additional training information
         setTimeout(() => {
-            document.body.removeChild(link);
-        }, 100);
+            const warningBox = document.createElement('div');
+            warningBox.className = "success-message";
+            warningBox.style.marginTop = "20px";
+            warningBox.style.background = "rgba(255, 149, 0, 0.1)";
+            warningBox.style.borderLeftColor = "#ff9500";
+            warningBox.innerHTML = `
+                <div class="success-title" style="color: #ff9500;">REAL-WORLD SCAM TECHNIQUE</div>
+                <div class="success-text">
+                    <strong>This simulates how scammers trick users:</strong><br><br>
+                    1. Fake popups create urgency and panic<br>
+                    2. Users instinctively click to close/hang up<br>
+                    3. The button actually triggers an automatic call<br>
+                    4. Victim is connected directly to scammers<br><br>
+                    <em>Always close suspicious popups using the browser's close button (X) or Alt+F4</em>
+                </div>
+            `;
+            document.querySelector('.calling-box').insertBefore(warningBox, document.querySelector('.close-btn'));
+        }, 1000);
+        
+        // Remove the link after use
+        setTimeout(() => {
+            document.body.removeChild(telLink);
+        }, 3000);
         
     }, 1500);
 }
 
-function showTrainingComplete() {
+function closeTraining() {
+    document.getElementById("callingScreen").style.display = "none";
+    
+    // Show final alert
     setTimeout(() => {
-        const trainingComplete = document.createElement("div");
-        trainingComplete.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #1c1c1e;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            z-index: 10001;
-            animation: fadein 0.3s ease;
-            max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        `;
-        trainingComplete.innerHTML = `
-            <div style="font-size: 24px; font-weight: bold; color: #ffd60a; margin-bottom: 15px;">
-                ⚠ Training Simulation Complete
-            </div>
-            <div style="font-size: 16px; line-height: 1.5; margin-bottom: 20px; opacity: 0.9;">
-                In a real scam scenario, pressing "Call" would:<br><br>
-                1. Connect you to fake technical support<br>
-                2. Scammers would try to gain remote access to your computer<br>
-                3. They might request payment or personal information<br>
-                4. This could lead to financial loss or identity theft<br><br>
-                <strong>Never call numbers from suspicious pop-ups!</strong>
-            </div>
-            <button onclick="this.parentElement.remove()" style="
-                background: #0a84ff;
-                color: white;
-                border: none;
-                padding: 12px 30px;
-                border-radius: 10px;
-                font-size: 16px;
-                font-weight: 600;
-                cursor: pointer;
-                margin-top: 10px;
-            ">
-                Close Training
-            </button>
-        `;
-        document.body.appendChild(trainingComplete);
-    }, 500);
+        alert("✅ Training Simulation Complete\n\n" +
+              "Key Learning: Scammers design fake call screens where the 'End Call' button " +
+              "actually triggers an automatic call to their number.\n\n" +
+              "Protection: Never interact with suspicious popups. Use browser controls to close them.");
+    }, 300);
 }
 
-// Close modals with ESC key
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        const dialModal = document.getElementById("dialModal");
-        if (dialModal.style.display === "flex") {
-            dialModal.style.display = "none";
-            showTrainingComplete();
-        }
+// Auto-close call screen after 30 seconds (safety)
+setTimeout(() => {
+    if (document.getElementById("callScreen").style.display === "flex" && !callAttempted) {
+        autoDialTollFree();
     }
-});
+}, 30000);
 </script>
 
 </body>
