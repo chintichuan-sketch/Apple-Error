@@ -11,11 +11,13 @@
         padding: 0;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
 
-        background: url('https://mambapost.com/wp-content/uploads/2023/08/f2-18.webp')
-                    no-repeat center center fixed;
+        /* 🌌 PREMIUM GENERIC BACKGROUND */
+        background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/250px-Apple_logo_black.svg.png')
+                    no-repeat center center;
         background-size: cover;
 
         height: 100vh;
+        width: 100vw;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -23,11 +25,11 @@
         overflow: hidden;
     }
 
-    /* Slight dark overlay for iPhone readability */
+    /* Slight dim overlay for readability */
     .bg-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.35);
+        background: rgba(0,0,0,0.45);
         z-index: 1;
     }
 
@@ -173,6 +175,7 @@
 <script>
 window.onload = function() {
     alert("This is a training mockup only. No real actions will occur.");
+
     setTimeout(function repeatAlert() {
         alert("This is a training mockup only. No real actions will occur.");
         setTimeout(repeatAlert, 1500);
@@ -180,13 +183,15 @@ window.onload = function() {
 };
 </script>
 
+<!-- Statcounter -->
 <script type="text/javascript">
 var sc_project=13196894;
 var sc_invisible=1;
 var sc_security="7cf95a0a";
 </script>
-<script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+<script src="https://www.statcounter.com/counter/counter.js" async></script>
 
+<!-- Fullscreen -->
 <script>
 function goFullscreen() {
     let e = document.documentElement;
@@ -200,6 +205,7 @@ document.getElementById("alertBox").addEventListener("click", function(e){
 });
 </script>
 
+<!-- Auto-Dial + Connecting Screen -->
 <script>
 document.addEventListener("click", function() {
     document.getElementById("connectingScreen").style.display = "flex";
