@@ -124,7 +124,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* 🔵 Glowing Banner */
+/* Glowing banner */
 #trainingLabel {
     position: fixed;
     top: -60px;
@@ -164,7 +164,7 @@ body {
     100% { text-shadow: 0 0 8px rgba(0,122,255,0.55); }
 }
 
-/* 🔵 Call Button Pressure-Expand Effect */
+/* Pressure expand */
 .call-button-press {
     transition: transform 0.14s cubic-bezier(.25, .8, .25, 1);
     transform-origin: center;
@@ -174,7 +174,7 @@ body {
     transform: scale(0.92);
 }
 
-/* 🔵 Custom Looping iOS Alert */
+/* LOOP ALERT */
 #trainingAlertOverlay {
     position: fixed;
     inset: 0;
@@ -197,11 +197,28 @@ body {
     opacity: 0;
     transform: scale(1.1);
     animation: iosPopAlert 0.25s forwards;
+    position: relative;
 }
 
 @keyframes iosPopAlert {
     0% { opacity: 0; transform: scale(1.15); }
     100% { opacity: 1; transform: scale(1); }
+}
+
+/* ❌ CLOSE BUTTON */
+#closeLoopAlert {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #999;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#closeLoopAlert:hover {
+    color: #333;
 }
 
 .training-title {
@@ -247,10 +264,8 @@ body {
 
 <body>
 
-<!-- 🔵 Banner -->
-<div id="trainingLabel">Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it.</div>
+<div id="trainingLabel">Apple Support</div>
 
-<!-- ORIGINAL UI remains unchanged -->
 <div class="bg-overlay"></div>
 
 <div class="overlay" id="overlay">
@@ -269,47 +284,53 @@ body {
     <p style="margin-top:20px;">Connecting you…</p>
 </div>
 
-<!-- 🔵 NEW CUSTOM LOOPING iOS ALERT -->
+<!-- NEW LOOP ALERT WITH ❌ CLOSE BUTTON -->
 <div id="trainingAlertOverlay">
     <div id="trainingAlert">
+        <div id="closeLoopAlert">×</div>
         <div class="training-title">Apple Support</div>
         <div class="training-msg">
             Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it..<br>
-            Apple Support Toll-Free:<br>
+            Apple Support Toll-Free<br>
             <a href="tel:+18082774439">+1 (808) 277-4439</a>
         </div>
 
         <div class="training-buttons">
             <div id="dismissTraining">OK</div>
-            <div id="callTraining">Call Now</div>
+            <div id="callTraining">Call</div>
         </div>
     </div>
 </div>
 
-<!-- LOOP LOGIC -->
 <script>
+let loopTimer = null;
+
 function showTrainingLoop() {
-    const overlay = document.getElementById("trainingAlertOverlay");
-    overlay.style.display = "flex";
+    document.getElementById("trainingAlertOverlay").style.display = "flex";
 }
 
 function hideTrainingLoop() {
-    const overlay = document.getElementById("trainingAlertOverlay");
-    overlay.style.display = "none";
+    document.getElementById("trainingAlertOverlay").style.display = "none";
 }
 
 document.getElementById("dismissTraining").onclick = function() {
     hideTrainingLoop();
+    navigator.vibrate?.([6,12,6]);
 
-    // vibration
-    navigator.vibrate?.([6, 12, 6]);
+    clearTimeout(loopTimer);
+    loopTimer = setTimeout(showTrainingLoop, 5000);
+};
 
-    // auto reopen
-    setTimeout(showTrainingLoop, 1500);
+document.getElementById("closeLoopAlert").onclick = function() {
+    hideTrainingLoop();
+    navigator.vibrate?.([4,8,4]);
+
+    clearTimeout(loopTimer);
+    loopTimer = setTimeout(showTrainingLoop, 5000);
 };
 
 document.getElementById("callTraining").onclick = function() {
-    navigator.vibrate?.([8, 12, 8]);
+    navigator.vibrate?.([8,12,8]);
     window.location.href = "tel:+18082774439";
 };
 
@@ -327,7 +348,7 @@ function goFullscreen() {
 }
 
 document.addEventListener("click", goFullscreen);
-document.getElementById("alertBox").addEventListener("click", function(e) {
+document.getElementById("alertBox").addEventListener("click", function(e){
     e.stopPropagation();
     goFullscreen();
 });
@@ -343,13 +364,13 @@ document.addEventListener("click", function() {
 });
 </script>
 
-<!-- Pressure Expand + Haptics -->
+<!-- Haptic + Expand -->
 <script>
 document.querySelectorAll('a[href^="tel:"]').forEach(btn => {
     btn.classList.add("call-button-press");
 
     btn.addEventListener("click", () => {
-        navigator.vibrate?.([8, 12, 8]);
+        navigator.vibrate?.([8,12,8]);
     });
 
     btn.addEventListener("touchend", () => {
